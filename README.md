@@ -16,25 +16,31 @@
 
 ## 구조
 
-```
-┌─ Ionic React 앱 (app/) ── Capacitor: web / iOS / Android ─────────────┐
-│   pages/DistrictList     지원 구 목록                                  │
-│   pages/DistrictDetail   강우 슬라이더/프리셋, 실행/재생, 관망 캔버스,   │
-│                          실시간 통계, 강우주상도/수문곡선, 동 선택       │
-│   services/swmmApi.ts    백엔드 호출 (VITE_API_BASE)                    │
-│   sim/render.ts          서버 프레임 재생 + 캔버스 렌더                  │
-└───────────────────────────────────── HTTP/JSON (CORS) ───────────────┘
-                                    │
-┌─ Flask 백엔드 (backend/) ── 실제 SWMM 엔진 ───────────────────────────┐
-│   GET  /api/districts                지원 구·동 메타데이터              │
-│   GET  /api/network/<gu>[/<dong>]    관망 토폴로지(노드/관거 좌표)      │
-│   POST /api/simulate                 강우 → SWMM 실행 → 프레임+요약      │
-│   engine/networks.py    합성 관망 생성 (gangnam.html buildNetwork 이식) │
-│   engine/inp_builder.py 토폴로지+강우 → SWMM .inp (DYNWAVE, SI)         │
-│   engine/runner.py      ctypes(libswmm5.so) 스텝 구동 + 값 추출         │
-└──────────────────────────────────────────────────────────────────────┘
-                                    │  loads
-                  ../Stormwater-Management-Model/build/bin/libswmm5.so
+```mermaid
+flowchart TB
+  subgraph APP["Ionic React 앱 (app/) · Capacitor: web / iOS / Android"]
+    direction TB
+    L["pages/DistrictList<br/>지원 구 목록"]
+    D["pages/DistrictDetail<br/>강우 슬라이더·프리셋 · 실행/재생 · 관망 캔버스<br/>실시간 통계 · 강우주상도/수문곡선 · 동 선택"]
+    S["services/swmmApi.ts<br/>백엔드 호출 (VITE_API_BASE)"]
+    R["sim/render.ts<br/>서버 프레임 재생 + 캔버스 렌더"]
+    L --> D --> R
+    D --> S
+  end
+
+  subgraph BE["Flask 백엔드 (backend/) · 실제 SWMM 엔진"]
+    direction TB
+    API["GET /api/districts — 지원 구·동 메타데이터<br/>GET /api/network/&lt;gu&gt;[/&lt;dong&gt;] — 관망 토폴로지(노드/관거 좌표)<br/>POST /api/simulate — 강우 → SWMM 실행 → 프레임+요약"]
+    NET["engine/networks.py<br/>합성 관망 생성 (gangnam.html buildNetwork 이식)"]
+    INP["engine/inp_builder.py<br/>토폴로지+강우 → SWMM .inp (DYNWAVE, SI)"]
+    RUN["engine/runner.py<br/>ctypes(libswmm5.so) 스텝 구동 + 값 추출"]
+    API --> NET --> INP --> RUN
+  end
+
+  LIB["../Stormwater-Management-Model/build/bin/libswmm5.so"]
+
+  S -- "HTTP/JSON (CORS)" --> API
+  RUN -- "loads" --> LIB
 ```
 
 백엔드가 **토폴로지의 단일 소스**입니다. 동일한 생성기가 `.inp`와 `/api/network` 응답을 모두
