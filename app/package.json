@@ -4,6 +4,9 @@
   "private": true,
   "description": "Seoul rainfall/runoff flood simulator (Ionic React) powered by a real EPA SWMM backend",
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

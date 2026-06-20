@@ -95,6 +95,10 @@ curl -X POST http://127.0.0.1:5057/api/simulate \
 
 ## 앱 실행 (Ionic React)
 
+> **Node.js 요구사항:** 빌드 도구(Vite 5)가 **Node.js 18 이상**을 요구합니다(권장: 20 LTS
+> 또는 22 LTS). Node 16 이하에서는 `crypto.getRandomValues is not a function` 오류로 개발
+> 서버가 시작되지 않습니다. 버전 확인은 `node -v`.
+
 Ionic은 npm 의존성으로만 설치되며 저장소에 포함되지 않습니다(`node_modules/`는 git 제외).
 
 ```bash
