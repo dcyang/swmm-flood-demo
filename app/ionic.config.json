@@ -1,0 +1,7 @@
+{
+  "name": "seoul-flood-swmm",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

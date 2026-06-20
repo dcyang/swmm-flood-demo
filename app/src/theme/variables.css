@@ -1,0 +1,30 @@
+/* Dark palette tuned to the original SWMM demos. */
+:root {
+  --ion-background-color: #0b1220;
+  --ion-background-color-rgb: 11, 18, 32;
+  --ion-text-color: #e6eefb;
+  --ion-text-color-rgb: 230, 238, 251;
+
+  --ion-color-primary: #37c0ff;
+  --ion-color-primary-rgb: 55, 192, 255;
+  --ion-color-primary-contrast: #04121d;
+  --ion-color-primary-shade: #30a9e0;
+  --ion-color-primary-tint: #4bc6ff;
+
+  --ion-toolbar-background: #121c2e;
+  --ion-item-background: #121c2e;
+  --ion-card-background: #121c2e;
+  --ion-border-color: #23344e;
+
+  --app-panel: #121c2e;
+  --app-panel2: #0e1626;
+  --app-line: #23344e;
+  --app-muted: #8fa6c4;
+  --app-accent2: #6ee7b7;
+  --app-warn: #ffb454;
+  --app-flood: #ff5470;
+}
+
+body {
+  background: radial-gradient(1200px 700px at 70% -10%, #16233b 0%, #0b1220 55%);
+}
