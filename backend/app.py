@@ -13,6 +13,7 @@ runner serializes calls with a lock.
 
 from __future__ import annotations
 
+import os
 from functools import lru_cache
 
 from flask import Flask, jsonify, request
@@ -80,4 +81,9 @@ def simulate():
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5057, debug=True)
+    # Bind to 127.0.0.1 by default; set FLASK_HOST=0.0.0.0 to expose publicly.
+    # Keep debug OFF when exposed (the Werkzeug debugger allows remote code exec).
+    host = os.environ.get("FLASK_HOST", "127.0.0.1")
+    port = int(os.environ.get("FLASK_PORT", "5057"))
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1"
+    app.run(host=host, port=port, debug=debug)
